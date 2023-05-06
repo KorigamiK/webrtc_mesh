@@ -17,6 +17,9 @@ void debugPrint(dynamic message) {
 /// https://stackoverflow.com/questions/23112130/creating-an-instance-of-a-generic-type-in-dart
 typedef ItemCreator<S> = S Function(String roomId, String localPeerID);
 
+/// The main class for WebRTC mesh
+/// [ISignalling] is the type of signalling to be used
+/// [SignalMessage] is the type of signalling message
 class WebRTCMesh<ISignalling extends Signalling<SignalMessage>> {
   ItemCreator<ISignalling> signallingCreator;
 
@@ -57,6 +60,7 @@ class WebRTCMesh<ISignalling extends Signalling<SignalMessage>> {
 
   StreamController<Message> messageStream = StreamController<Message>();
 
+  /// Sends a join announcement to all peers on the mesh
   WebRTCMesh(
       {required this.roomID, String? peerID, required this.signallingCreator}) {
     localPeerID = peerID ?? const Uuid().v4();
@@ -91,6 +95,7 @@ class WebRTCMesh<ISignalling extends Signalling<SignalMessage>> {
     pc.dataChannel!.onDataChannelState = _handleDataChannelState(peerID);
   }
 
+  /// Send a message to a peer
   Future<void> sendToPeer(String peerID, String message) async {
     final pc = _peerConnections[peerID]!;
     if (pc.dataChannel == null) {
@@ -102,6 +107,7 @@ class WebRTCMesh<ISignalling extends Signalling<SignalMessage>> {
         Message(type: 'message', message: message, from: peerID).toJson())));
   }
 
+  /// Send a message to all peers in the mesh
   Future<void> sendToAllPeers(String message) async {
     for (final peerID in _peerConnections.keys) {
       await sendToPeer(peerID, message);

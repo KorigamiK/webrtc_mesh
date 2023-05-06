@@ -9,6 +9,7 @@ enum PeerConnectionState {
   closed,
 }
 
+/// A class that represents a peer connection.
 class PeerConnection {
   PeerConnectionState state;
   RTCPeerConnection? conn;
