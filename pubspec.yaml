@@ -1,6 +1,6 @@
 name: webrtc_mesh
-description: Easy cross-platform WebRTC mesh network for Flutter.
-version: 0.0.1
+description: Easy cross-platform WebRTC peer based mesh network for Flutter with a simple to implement signalling api.
+version: 0.0.2
 homepage: https://github.com/korigamik/webrtc_mesh/blob/main/README.md
 repository: https://github.com/korigamik/webrtc_mesh
 
