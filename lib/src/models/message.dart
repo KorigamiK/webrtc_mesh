@@ -36,14 +36,15 @@ class SignalMessage {
   final String type;
   final Map<String, dynamic> message;
   final bool announce;
-  final int timestamp = DateTime.now().millisecondsSinceEpoch;
+  final int timestamp;
 
-  SignalMessage({
-    required this.from,
-    required this.type,
-    required this.message,
-    this.announce = false,
-  });
+  SignalMessage(
+      {required this.from,
+      required this.type,
+      required this.message,
+      this.announce = false,
+      int? timestamp})
+      : timestamp = timestamp ?? DateTime.now().millisecondsSinceEpoch;
 
   @override
   String toString() {
@@ -51,7 +52,7 @@ class SignalMessage {
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    return <String, dynamic>{
       'from': from,
       'type': type,
       'message': message,

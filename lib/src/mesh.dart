@@ -104,7 +104,8 @@ class WebRTCMesh<ISignalling extends Signalling<SignalMessage>> {
     }
     debugPrint('sending to $peerID: $message');
     await pc.dataChannel!.send(RTCDataChannelMessage(jsonEncode(
-        Message(type: 'message', message: message, from: peerID).toJson())));
+        Message(type: 'message', message: message, from: localPeerID)
+            .toJson())));
   }
 
   /// Send a message to all peers in the mesh

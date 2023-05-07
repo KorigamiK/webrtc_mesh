@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:webrtc_mesh/src/models/message.dart';
-import 'package:webrtc_mesh/src/models/signalling.dart';
+import 'package:webrtc_mesh/webrtc_mesh.dart';
 
 class FirestoreSignalling extends Signalling<SignalMessage> {
   late final CollectionReference _roomCollection;
@@ -14,16 +12,18 @@ class FirestoreSignalling extends Signalling<SignalMessage> {
         .collection('rooms')
         .doc(roomID)
         .collection('messages');
+    init();
   }
 
   @override
-  Future<void> sendMessage(String type, dynamic message,
-      {bool announce = false}) {
-    return _roomCollection.add(Message(
+  Future<void> sendMessage(String type, Map<String, dynamic> message,
+      {bool announce = false}) async {
+    final signalMessage = SignalMessage(
       type: type,
       message: message,
       from: localPeerID,
-    ).toJson());
+    );
+    await _roomCollection.add(signalMessage.toJson());
   }
 
   @override

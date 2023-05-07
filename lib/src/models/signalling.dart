@@ -15,7 +15,6 @@ abstract class Signalling<SignalMssageT extends SignalMessage> {
 
   Signalling(this.roomID, this.localPeerID) {
     if (kDebugMode) print('Signalling: $roomID, $localPeerID');
-    init();
   }
 
   void init() {
@@ -28,6 +27,6 @@ abstract class Signalling<SignalMssageT extends SignalMessage> {
   /// [type] is the type of message
   /// [message] is the message to send
   /// [announce] is whether to announce the message to the room
-  Future<void> sendMessage(String type, dynamic message,
+  Future<void> sendMessage(String type, Map<String, dynamic> message,
       {bool announce = false});
 }
